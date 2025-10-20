@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лекция №3 - Языки взаимодействия пользователя с операционной системой</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h2 {
+            color: #34495e;
+            font-size: 1.8em;
+            margin: 30px 0 15px 0;
+            padding: 10px 0;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        h3 {
+            color: #2c3e50;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+            padding-left: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        p {
+            margin-bottom: 16px;
+            text-align: justify;
+            font-size: 1.1em;
+            line-height: 1.7;
+            padding: 8px 0;
+        }
+
+        .content-block {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-block:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .topic-section {
+            margin: 25px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+        }
+
+        .sub-topic {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #dca1ff;
+        }
+
+        .definition {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+            font-style: italic;
+        }
+
+        .emphasis {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #e83e8c;
+        }
+
+        .questions-section {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border: 2px solid #ffffff;
+        }
+
+        .question-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .answer {
+            background: #e9d4ed;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            border-left: 3px solid #e4a1ff;
+        }
+
+        .interface-type {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px solid #dee2e6;
+            transition: all 0.3s ease;
+        }
+
+        .interface-type:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+            
+            h3 {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Лекция № 3</h1>
+        <h2>Языки взаимодействия пользователя с операционной системой. Понятие программного интерфейса, его назначение. Виды интерфейсов.</h2>
+        
+        <div class="content-block">
+            <p>Современные операционные системы служат связующим звеном между пользователем и аппаратным обеспечением компьютера. Чтобы пользователь мог эффективно работать с системой, необходимы средства взаимодействия. В этой лекции мы подробно рассмотрим различные языки взаимодействия с операционной системой, а также понятие программного интерфейса и его виды.</p>
+        </div>
+
+        <div class="definition">
+            <p>Язык взаимодействия пользователя с операционной системой — это способ, с помощью которого пользователь может давать команды операционной системе и получать результаты их выполнения. Эти команды могут быть как текстовыми, так и графическими.</p>
+        </div>
+
+        <div class="topic-section">
+            <h2>Текстовые интерфейсы</h2>
+            
+            <div class="interface-type">
+                <p>Текстовые интерфейсы, или командные строки, предполагают ввод команд в текстовом формате. Это один из старейших и наиболее мощных способов взаимодействия с операционной системой. С помощью командной строки пользователи могут напрямую взаимодействовать с системой, используя определенные команды для выполнения различных операций.</p>
+            </div>
+
+            <div class="sub-topic">
+                <p><strong>Unix/Linux системы:</strong> В операционных системах семейства Unix/Linux используется терминал, где пользователь может вводить команды, такие как <code>ls</code> для отображения списка файлов в директории или <code>cd</code> для перехода между каталогами.</p>
+            </div>
+
+            <div class="sub-topic">
+                <p><strong>Windows системы:</strong> В Windows существует командная строка (cmd), где можно выполнять аналогичные команды, например <code>dir</code> для отображения списка файлов.</p>
+            </div>
+
+            <div class="sub-topic">
+                <p><strong>Командные оболочки:</strong> Командные оболочки, такие как Bash в Linux или PowerShell в Windows, предоставляют пользователю мощный инструментарий для автоматизации и администрирования системы.</p>
+            </div>
+        </div>
+
+        <div class="topic-section">
+            <h2>Графические интерфейсы</h2>
+            
+            <div class="interface-type">
+                <p>Графический пользовательский интерфейс (Graphical User Interface) представляет собой взаимодействие с операционной системой через визуальные элементы, такие как окна, кнопки, меню и значки. Графический пользовательский интерфейс делает операционную систему доступной для широкой аудитории, включая тех пользователей, кто не обладает специальными техническими знаниями.</p>
+            </div>
+
+            <div class="sub-topic">
+                <p><strong>Windows:</strong> В Windows графический интерфейс включает в себя рабочий стол, панели задач, окна приложений, меню "Пуск" и другие элементы управления.</p>
+            </div>
+
+            <div class="sub-topic">
+                <p><strong>macOS:</strong> В macOS аналогичные функции выполняют элементы интерфейса, такие как док, меню в верхней части экрана, и различные всплывающие окна.</p>
+            </div>
+
+            <div class="emphasis">
+                <p>Графический интерфейс значительно упрощает взаимодействие, делая его более интуитивно понятным и визуально привлекательным.</p>
+            </div>
+        </div>
+
+        <div class="topic-section">
+            <h2>Голосовые интерфейсы</h2>
+            
+            <div class="interface-type">
+                <p>Голосовые интерфейсы — это новая форма взаимодействия, где пользователь может давать команды операционной системе с помощью речи. Голосовые системы используют технологии распознавания речи и могут выполнять команды, такие как поиск информации, запуск приложений или управление настройками.</p>
+            </div>
+
+            <div class="sub-topic">
+                <p><strong>Siri (Apple):</strong> Голосовой помощник Siri в Apple</p>
+            </div>
+
+            <div class="sub-topic">
+                <p><strong>Google Assistant (Android):</strong> Голосовой помощник на Android</p>
+            </div>
+
+            <div class="sub-topic">
+                <p><strong>Cortana (Windows):</strong> Голосовой помощник в Windows</p>
+            </div>
+        </div>
+
+        <div class="topic-section">
+            <h2>Программный интерфейс (<span class="api-highlight">Application Programming Interface</span>)</h2>
+            
+            <div class="definition">
+                <p>Программный интерфейс (<span class="api-highlight">Application Programming Interface</span>) — это набор средств и протоколов, который позволяет программному обеспечению взаимодействовать с операционной системой или другими программами. <span class="api-highlight">Application Programming Interface</span> является основным инструментом для разработчиков, создающих приложения, которые должны работать на разных платформах.</p>
+            </div>
+
+            <div class="content-block">
+                <p><strong><span class="api-highlight">Application Programming Interface</span> включает в себя:</strong></p>
+                <p>• Функции или методы, которые предоставляет операционная система или другие программы.</p>
+                <p>• Описание того, как и в каком порядке нужно вызывать эти функции.</p>
+                <p>• Формат данных, который ожидает система или приложение.</p>
+            </div>
+
+            <div class="sub-topic">
+                <p><span class="api-highlight">Application Programming Interface</span> позволяет скрывать сложность работы с операционной системой и упрощает разработку приложений. Разработчик использует <span class="api-highlight">Application Programming Interface</span> для выполнения определенных операций, таких как доступ к файловой системе, управление памятью, создание сетевых соединений и многое другое.</p>
+            </div>
+
+            <div class="emphasis">
+                <p>Главной целью <span class="api-highlight">Application Programming Interface</span> является создание абстракции над сложной внутренней реализацией операционной системы или другой программы. Это позволяет программистам не беспокоиться о низкоуровневых деталях и сосредоточиться на решении задач своей программы.</p>
+            </div>
+
+            <div class="sub-topic">
+                <p><strong>Пример работы с файлами:</strong> Если приложение хочет открыть файл, оно не взаимодействует напрямую с аппаратной частью, а использует функцию <span class="api-highlight">Application Programming Interface</span> операционной системы, например, <code>fopen</code> в языке C для открытия файла.</p>
+            </div>
+
+            <div class="sub-topic">
+                <p><strong>Пример сетевого взаимодействия:</strong> Для работы с сетью можно использовать <span class="api-highlight">Application Programming Interface</span> сокетов, который абстрагирует детали сетевых соединений.</p>
+            </div>
+        </div>
+
+        <div class="topic-section">
+            <h2>Виды интерфейсов</h2>
+
+            <div class="interface-type">
+                <h3>Пользовательский интерфейс (User Interface)</h3>
+                <p>Пользовательский интерфейс (User Interface) — это совокупность всех средств, с помощью которых пользователи взаимодействуют с системой. Это может быть как командная строка, так и графический интерфейс. Важнейшими аспектами User Interface являются удобство, доступность и эффективность взаимодействия.</p>
+                <div class="sub-topic">
+                    <p><strong>Пример:</strong> Интерфейс приложения для заказа такси. В этом приложении есть кнопки для вызова машины, меню выбора типа автомобиля и поля ввода адреса. Они расположены таким образом, чтобы пользователю не нужно было тратить много времени на поиск необходимой функции. Это делает взаимодействие с приложением быстрым и удобным.</p>
+                </div>
+            </div>
+
+            <div class="interface-type">
+                <h3>Программный интерфейс (Application Programming Interface)</h3>
+                <p><span class="api-highlight">Application Programming Interface</span>, как уже обсуждалось, — это средство взаимодействия программ с операционной системой. В отличие от User Interface, <span class="api-highlight">Application Programming Interface</span> ориентирован на разработчиков, а не на конечных пользователей.</p>
+            </div>
+
+            <div class="interface-type">
+                <h3>Аппаратный интерфейс (Hardware Interface)</h3>
+                <p>Аппаратный интерфейс — это набор протоколов и стандартов, которые используются для взаимодействия операционной системы с аппаратным обеспечением. Это включает драйверы устройств, шины передачи данных и другие низкоуровневые механизмы.</p>
+                <div class="sub-topic">
+                    <p><strong>Пример USB:</strong> Universal Serial Bus является универсальным и широко используемым интерфейсом для подключения и питания периферийных устройств к компьютерам и микроконтроллерам. Он поддерживает передачу данных и электропитание через один и тот же кабель, обеспечивая удобство и простоту использования.</p>
+                </div>
+            </div>
+
+            <div class="interface-type">
+                <h3>Сетевой интерфейс</h3>
+                <p>Сетевой интерфейс — это механизм, который позволяет системе и приложениям обмениваться данными по сети. Сетевые интерфейсы могут быть реализованы через сокеты или более высокоуровневые <span class="api-highlight">Application Programming Interface</span>.</p>
+            </div>
+        </div>
+
+        <div class="topic-section">
+            <h2>Примеры интерфейсов в операционных системах</h2>
+
+            <div class="interface-type">
+                <h3>UNIX/Linux</h3>
+                <p>В UNIX и Linux операционных системах существует несколько типов интерфейсов:</p>
+                <div class="sub-topic">
+                    <p><strong>Командная оболочка (Shell):</strong> основное средство взаимодействия с системой через командную строку. Это может быть Bash, Zsh, Fish и другие оболочки.</p>
+                </div>
+                <div class="sub-topic">
+                    <p><strong>Графический интерфейс:</strong> в Linux существует несколько графических оболочек, таких как GNOME, KDE, Xfce, которые обеспечивают визуальное взаимодействие с пользователем.</p>
+                </div>
+                <div class="sub-topic">
+                    <p><strong>Системные вызовы и <span class="api-highlight">Application Programming Interface</span>:</strong> программное взаимодействие с ядром системы осуществляется через <span class="api-highlight">Application Programming Interface</span>, предоставляемые операционной системой.</p>
+                </div>
+            </div>
+
+            <div class="interface-type">
+                <h3>Windows</h3>
+                <p>В Windows операционной системе:</p>
+                <div class="sub-topic">
+                    <p><strong>Командная строка (Command Prompt) и PowerShell:</strong> командные интерфейсы для выполнения различных задач.</p>
+                </div>
+                <div class="sub-topic">
+                    <p><strong>Graphical User Interface (графический пользовательский интерфейс):</strong> графический интерфейс, в котором все основные функции, такие как управление окнами, запуск программ, управление файлами, выполняются с помощью визуальных элементов.</p>
+                </div>
+                <div class="sub-topic">
+                    <p><strong>Windows <span class="api-highlight">Application Programming Interface</span>:</strong> набор функций, предоставляемых операционной системой для взаимодействия с приложениями, например, для работы с окнами, графикой, сетью и так далее.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <p>Языки взаимодействия пользователя с операционной системой являются важной частью ее функционала и определяют удобство работы с компьютером. От текстовых интерфейсов до сложных графических и голосовых систем — каждый способ взаимодействия предоставляет свои преимущества в зависимости от задач и потребностей пользователя.</p>
+            <p>Понимание программных интерфейсов (<span class="api-highlight">Application Programming Interface</span>) позволяет разработчикам создавать более эффективные и совместимые приложения. Знание этих интерфейсов — ключевая часть понимания того, как работают современные операционные системы.</p>
+        </div>
+
+        <div class="questions-section">
+            <h2>Вопросы для самопроверки</h2>
+            
+            <div class="question-item">
+                <p><strong>1. Чем отличаются текстовые и графические интерфейсы взаимодействия с операционной системой?</strong></p>
+                <div class="answer">
+                    <p><strong>Ответ:</strong> Текстовые интерфейсы (командная строка) требуют ввода команд в текстовом формате и предоставляют более мощные возможности для автоматизации и администрирования системы. Графические интерфейсы используют визуальные элементы (окна, кнопки, меню) и более интуитивно понятны для обычных пользователей, не требующих специальных технических знаний.</p>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <p><strong>2. Что такое <span class="api-highlight">Application Programming Interface</span> и какое его назначение в программировании?</strong></p>
+                <div class="answer">
+                    <p><strong>Ответ:</strong> <span class="api-highlight">Application Programming Interface</span> (программный интерфейс приложения) - это набор средств, протоколов и функций, который позволяет программному обеспечению взаимодействовать с операционной системой или другими программами. Его назначение заключается в создании абстракции над сложной внутренней реализацией, упрощении разработки приложений и обеспечении совместимости между различными компонентами программного обеспечения.</p>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <p><strong>3. Приведите примеры <span class="api-highlight">Application Programming Interface</span> в популярных операционных системах.</strong></p>
+                <div class="answer">
+                    <p><strong>Ответ:</strong> В Windows - Windows <span class="api-highlight">Application Programming Interface</span> для работы с окнами, графикой и сетью; в Unix/Linux - системные вызовы и POSIX <span class="api-highlight">Application Programming Interface</span> для работы с файловой системой и процессами; в macOS - Cocoa <span class="api-highlight">Application Programming Interface</span> для разработки приложений; кроссплатформенные - OpenGL для графики, socket <span class="api-highlight">Application Programming Interface</span> для сетевых соединений.</p>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <p><strong>4. Какие виды интерфейсов существуют и в чем их отличие?</strong></p>
+                <div class="answer">
+                    <p><strong>Ответ:</strong> Существуют пользовательский интерфейс (User Interface) для взаимодействия человека с системой, программный интерфейс (<span class="api-highlight">Application Programming Interface</span>) для взаимодействия программ между собой, аппаратный интерфейс для связи операционной системы с оборудованием и сетевой интерфейс для обмена данными по сети. Их основное отличие заключается в целевой аудитории и назначении: User Interface для конечных пользователей, <span class="api-highlight">Application Programming Interface</span> для разработчиков, аппаратный интерфейс для работы с железом, сетевой интерфейс для коммуникации между системами.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
