@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Разработка модели архитектуры ИС</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h2 {
+            color: #34495e;
+            font-size: 1.6em;
+            margin: 30px 0 15px 0;
+            padding: 10px 0;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        h3 {
+            color: #2c3e50;
+            font-size: 1.3em;
+            margin: 20px 0 10px 0;
+            padding-left: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        p {
+            margin-bottom: 16px;
+            text-align: justify;
+            font-size: 1.1em;
+            line-height: 1.7;
+        }
+
+        .content-block {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .topic-section {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+        }
+
+        .sub-topic {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #28a745;
+        }
+
+        .architecture-level {
+            margin: 15px 0;
+            padding: 15px;
+            background: #e8f4fd;
+            border-radius: 8px;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .definition {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #ba34db;
+            font-style: italic;
+        }
+
+        .emphasis {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        .diagram-example {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .component-list {
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #6c757d;
+        }
+
+        .database-schema {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #007bff;
+            font-family: 'Courier New', monospace;
+        }
+
+        ul, ol {
+            margin: 10px 0 10px 30px;
+        }
+
+        ul li, ol li {
+            margin-bottom: 8px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        strong {
+            color: #2c3e50;
+        }
+
+        .lecture-info {
+            background: #e8f4fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .section-number {
+            background: #667eea;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .flowchart {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #dee2e6;
+            text-align: center;
+        }
+
+        .flowchart-box {
+            display: inline-block;
+            padding: 15px;
+            margin: 10px;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            min-width: 200px;
+        }
+
+        .flowchart-arrow {
+            font-size: 1.5em;
+            color: #667eea;
+            margin: 0 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            h2 {
+                font-size: 1.4em;
+            }
+            
+            .flowchart-box {
+                min-width: 150px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Лекция 4. Разработка модели архитектуры ИС на примере "Интернет-магазин"</h1>
+        
+        <div class="lecture-info">
+            <p><strong>Цель лекции:</strong> Спроектировать и отобразить графически основные компоненты системы, их взаимодействие и место в общей структуре на примере интернет-магазина.</p>
+            <p><strong>Ключевая мысль:</strong> Правильно спроектированная архитектура — это фундамент успешной информационной системы, обеспечивающий ее масштабируемость, надежность и безопасность.</p>
+        </div>
+
+        <div class="topic-section">
+            <h2>1. Выбор типа архитектуры</h2>
+            
+            <div class="content-block">
+                <p>Для веб-приложений, таких как интернет-магазин, наиболее распространена трехуровневая (трехзвенная) архитектура. Она обеспечивает модульность, масштабируемость и безопасность.</p>
+            </div>
+
+            <div class="architecture-level">
+                <h3><span class="section-number">1</span> Уровень представления (Presentation Layer)</h3>
+                <p><strong>Клиентская часть</strong> - то, что видит пользователь в браузере:</p>
+                <ul>
+                    <li>Веб-интерфейс на HTML, CSS, JavaScript</li>
+                    <li>Мобильные приложения (если предусмотрены)</li>
+                    <li>Административная панель</li>
+                    <li>Отвечает за отображение данных и взаимодействие с пользователем</li>
+                </ul>
+            </div>
+
+            <div class="architecture-level">
+                <h3><span class="section-number">2</span> Уровень бизнес-логики (Business Logic Layer)</h3>
+                <p><strong>Серверная часть</strong> - мозг системы, где выполняются все операции:</p>
+                <ul>
+                    <li>Обработка бизнес-правил и алгоритмов</li>
+                    <li>Валидация данных</li>
+                    <li>Координация работы между различными модулями</li>
+                    <li>Обеспечение безопасности и авторизации</li>
+                </ul>
+            </div>
+
+            <div class="architecture-level">
+                <h3><span class="section-number">3</span> Уровень доступа к данным (Data Access Layer)</h3>
+                <p><strong>Уровень данных</strong> - где хранится информация:</p>
+                <ul>
+                    <li>Базы данных (реляционные и NoSQL)</li>
+                    <li>Файловые хранилища</li>
+                    <li>Кэширующие системы</li>
+                    <li>Обеспечение целостности и сохранности данных</li>
+                </ul>
+            </div>
+
+            <div class="emphasis">
+                <p><strong>Преимущества трехуровневой архитектуры:</strong></p>
+                <ul>
+                    <li>Разделение ответственности между уровнями</li>
+                    <li>Возможность независимого масштабирования каждого уровня</li>
+                    <li>Упрощение тестирования и сопровождения</li>
+                    <li>Повышение безопасности за счет изоляции уровней</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="topic-section">
+            <h2>2. Декомпозиция архитектуры на модели (диаграммы)</h2>
+            
+            <div class="content-block">
+                <p>Одной картинкой архитектуру не описать. Нужно создать несколько взаимосвязанных моделей, которые показывают систему с разных точек зрения.</p>
+            </div>
+
+            <div class="sub-topic">
+                <h3>Модель 1: Контекстная диаграмма (Диаграмма окружения)</h3>
+                
+                <div class="definition">
+                    <p><strong>Задача:</strong> Показать, с какими внешними системами и субъектами будет взаимодействовать наша информационная система.</p>
+                </div>
+
+                <div class="component-list">
+                    <p><strong>Компоненты для интернет-магазина:</strong></p>
+                    <ul>
+                        <li><strong>Покупатель:</strong> Взаимодействует с системой через браузер или мобильное приложение</li>
+                        <li><strong>Платежный шлюз:</strong> Внешняя система для приема платежей (например, ЮKassa, Stripe)</li>
+                        <li><strong>Курьерская служба:</strong> Внешняя система для передачи данных о доставке и получения трек-номера</li>
+                        <li><strong>СМС-сервис:</strong> Внешняя система для отправки уведомлений клиентам</li>
+                        <li><strong>Email-сервис:</strong> Внешняя система для рассылки писем</li>
+                        <li><strong>Администратор магазина:</strong> Управляет контентом и заказами через админ-панель</li>
+                        <li><strong>Менеджер по продажам:</strong> Обрабатывает заказы и работает с клиентами</li>
+                    </ul>
+                </div>
+
+                <div class="diagram-example">
+                    <p><strong>Пример взаимодействия:</strong></p>
+                    <div class="flowchart">
+                        <div class="flowchart-box">Покупатель</div>
+                        <span class="flowchart-arrow">↔</span>
+                        <div class="flowchart-box">Интернет-магазин</div>
+                        <span class="flowchart-arrow">↔</span>
+                        <div class="flowchart-box">Платежный шлюз</div>
+                        <br>
+                        <div class="flowchart-box">Администратор</div>
+                        <span class="flowchart-arrow">↔</span>
+                        <div class="flowchart-box">Интернет-магазин</div>
+                        <span class="flowchart-arrow">↔</span>
+                        <div class="flowchart-box">Курьерская служба</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-topic">
+                <h3>Модель 2: Компонентная диаграмма (Логическая архитектура)</h3>
+                
+                <div class="definition">
+                    <p><strong>Задача:</strong> Показать основные программные модули (компоненты) системы и связи между ними.</p>
+                </div>
+
+                <div class="component-list">
+                    <p><strong>Основные компоненты системы:</strong></p>
+                    
+                    <h4>Frontend (Клиентское приложение):</h4>
+                    <ul>
+                        <li><strong>Веб-интерфейс:</strong> Отвечает за отображение интерфейса (React, Vue.js, Angular)</li>
+                        <li><strong>Мобильное приложение:</strong> Нативные или кроссплатформенные приложения</li>
+                        <li><strong>Административная панель:</strong> Интерфейс для управления магазином</li>
+                    </ul>
+
+                    <h4>Backend (Серверное приложение):</h4>
+                    <ul>
+                        <li><strong>API Gateway:</strong> Единая точка входа для всех запросов, маршрутизация и аутентификация</li>
+                        <li><strong>Модуль аутентификации (Auth):</strong> Регистрация, вход, управление сессиями, восстановление пароля</li>
+                        <li><strong>Модуль каталога (Catalog):</strong> Управление товарами, категориями, остатками, поиск и фильтрация</li>
+                        <li><strong>Модуль заказов (Order):</strong> Формирование корзины, оформление и отслеживание заказов, история покупок</li>
+                        <li><strong>Модуль оплаты (Payment):</strong> Взаимодействие с платежным шлюзом, обработка транзакций</li>
+                        <li><strong>Модуль уведомлений (Notification):</strong> Отправка email и SMS, управление рассылками</li>
+                        <li><strong>Модуль доставки (Delivery):</strong> Расчет стоимости доставки, интеграция с курьерскими службами</li>
+                        <li><strong>Модуль аналитики (Analytics):</strong> Сбор статистики, формирование отчетов</li>
+                    </ul>
+
+                    <h4>Уровень данных (Data Layer):</h4>
+                    <ul>
+                        <li><strong>База данных (PostgreSQL/MySQL):</strong> Основное хранилище структурированных данных</li>
+                        <li><strong>Кеш (Redis):</strong> Для хранения сессий и временных данных (например, корзина)</li>
+                        <li><strong>Файловое хранилище (S3):</strong> Для изображений товаров и документов</li>
+                        <li><strong>Поисковый движок (Elasticsearch):</strong> Для полнотекстового поиска по каталогу</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sub-topic">
+                <h3>Модель 3: Физическая архитектура (Деплоймент-диаграмма)</h3>
+                
+                <div class="definition">
+                    <p><strong>Задача:</strong> Показать, на каких реальных или виртуальных серверах будут развернуты компоненты системы.</p>
+                </div>
+
+                <div class="diagram-example">
+                    <p><strong>Схема развертывания интернет-магазина:</strong></p>
+                    <div class="flowchart">
+                        <div style="background: #e8f4fd; padding: 15px; border-radius: 8px; margin: 10px;">
+                            <strong>Интернет</strong>
+                            <div style="display: flex; justify-content: center; flex-wrap: wrap;">
+                                <div class="flowchart-box">Пользователи</div>
+                                <div class="flowchart-box">Администраторы</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flowchart-arrow">↓</div>
+                        
+                        <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin: 10px;">
+                            <strong>Демилитаризованная зона (DMZ)</strong>
+                            <div class="flowchart-box">Балансировщик нагрузки<br>Load Balancer</div>
+                        </div>
+                        
+                        <div class="flowchart-arrow">↓</div>
+                        
+                        <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin: 10px;">
+                            <strong>Внутренняя сеть</strong>
+                            <div style="display: flex; justify-content: center; flex-wrap: wrap;">
+                                <div style="margin: 10px;">
+                                    <strong>Веб-уровень</strong>
+                                    <div class="flowchart-box">Веб-сервер 1<br>Nginx</div>
+                                    <div class="flowchart-box">Веб-сервер 2<br>Nginx</div>
+                                </div>
+                                
+                                <div style="margin: 10px;">
+                                    <strong>Уровень приложений</strong>
+                                    <div class="flowchart-box">Сервер приложений 1<br>Node.js/Docker</div>
+                                    <div class="flowchart-box">Сервер приложений 2<br>Node.js/Docker</div>
+                                </div>
+                                
+                                <div style="margin: 10px;">
+                                    <strong>Уровень данных</strong>
+                                    <div class="flowchart-box">Кластер БД<br>PostgreSQL</div>
+                                    <div class="flowchart-box">Сервер кеша<br>Redis</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="component-list">
+                    <p><strong>Описание компонентов физической архитектуры:</strong></p>
+                    <ul>
+                        <li><strong>Балансировщик нагрузки (Load Balancer):</strong> Распределяет трафик между веб-серверами, обеспечивает отказоустойчивость</li>
+                        <li><strong>Веб-серверы (Nginx):</strong> Отдают статический контент (HTML, CSS, JS) и проксируют запросы к серверам приложений</li>
+                        <li><strong>Серверы приложений (Node.js, Java, Python):</strong> На них развернута бэкенд-логика. Запущены в контейнерах Docker для простоты развертывания</li>
+                        <li><strong>Кластер БД:</strong> Основная база данных с репликацией для надежности и распределения нагрузки</li>
+                        <li><strong>Сервер кеша (Redis):</strong> Отдельный сервер для быстрого доступа к временным данным, сессиям, корзинам покупок</li>
+                        <li><strong>Файловое хранилище:</strong> Объектное хранилище для медиафайлов и документов</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sub-topic">
+                <h3>Модель 4: Модель данных (ER-диаграмма)</h3>
+                
+                <div class="definition">
+                    <p><strong>Задача:</strong> Показать структуру базы данных — сущности, их атрибуты и связи между ними.</p>
+                </div>
+
+                <div class="database-schema">
+                    <p><strong>Упрощенная ER-диаграмма для интернет-магазина:</strong></p>
+                    <pre>
+USERS (Пользователи)
+├── id (PK) - уникальный идентификатор
+├── email - электронная почта
+├── password_hash - хеш пароля
+├── name - имя пользователя
+├── phone - телефон
+└── registration_date - дата регистрации
+
+CATEGORIES (Категории)
+├── id (PK) - уникальный идентификатор
+├── name - название категории
+├── description - описание категории
+└── parent_id (FK) - ссылка на родительскую категорию
+
+PRODUCTS (Товары)
+├── id (PK) - уникальный идентификатор
+├── name - название товара
+├── description - описание товара
+├── price - цена
+├── category_id (FK) - категория товара
+├── stock_quantity - количество на складе
+├── image_url - ссылка на изображение
+└── is_active - флаг активности товара
+
+ORDERS (Заказы)
+├── id (PK) - уникальный идентификатор
+├── user_id (FK) - пользователь
+├── order_date - дата заказа
+├── status - статус заказа
+├── total_amount - общая сумма
+├── shipping_address - адрес доставки
+└── payment_status - статус оплаты
+
+ORDER_ITEMS (Элементы заказа)
+├── id (PK) - уникальный идентификатор
+├── order_id (FK) - заказ
+├── product_id (FK) - товар
+├── quantity - количество
+└── price - цена на момент заказа
+
+PAYMENTS (Платежи)
+├── id (PK) - уникальный идентификатор
+├── order_id (FK) - заказ
+├── amount - сумма платежа
+├── payment_method - способ оплаты
+├── transaction_id - идентификатор транзакции
+└── payment_date - дата платежа
+                    </pre>
+                </div>
+
+                <div class="component-list">
+                    <p><strong>Основные связи между сущностями:</strong></p>
+                    <ul>
+                        <li><strong>USERS → ORDERS:</strong> Один пользователь может иметь много заказов</li>
+                        <li><strong>CATEGORIES → PRODUCTS:</strong> Одна категория может содержать много товаров</li>
+                        <li><strong>ORDERS → ORDER_ITEMS:</strong> Один заказ состоит из нескольких элементов</li>
+                        <li><strong>PRODUCTS → ORDER_ITEMS:</strong> Один товар может входить в несколько заказов</li>
+                        <li><strong>ORDERS → PAYMENTS:</strong> Один заказ может иметь несколько платежей</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic-section">
+            <h2>3. Как оформить в отчете по УП.05</h2>
+            
+            <div class="content-block">
+                <ol>
+                    <li><strong>Введение:</strong> 
+                        <ul>
+                            <li>Обоснование выбранного типа архитектуры (трехуровневая, микросервисная)</li>
+                            <li>Описание предметной области и основных требований к системе</li>
+                            <li>Цели и задачи проектирования архитектуры</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Диаграммы:</strong>
+                        <ul>
+                            <li>Представить все 4 модели с подробными пояснениями к каждому компоненту</li>
+                            <li>Обеспечить читаемость и понятность диаграмм</li>
+                            <li>Дать развернутые описания каждого элемента архитектуры</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Связь с требованиями:</strong>
+                        <ul>
+                            <li>Показать, как архитектура удовлетворяет функциональным требованиям</li>
+                            <li>Обосновать выбор технологий с точки зрения нефункциональных требований</li>
+                            <li>Продемонстрировать, как архитектурные решения обеспечивают надежность, безопасность и масштабируемость</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Вывод:</strong>
+                        <ul>
+                            <li>Краткое резюме, почему предложенная архитектура является оптимальной для проекта</li>
+                            <li>Преимущества выбранных решений</li>
+                            <li>Возможные направления развития архитектуры в будущем</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="emphasis">
+                <p><strong>Итог:</strong> Эта работа покажет, что вы понимаете не только что делать, но и как это должно быть реализовано на практике. Качественно спроектированная архитектура — залог успешной реализации и долгосрочного развития информационной системы.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
