@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лекция: Компьютерные сети - Компоненты сети, топологии, адресация, модели</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h2 {
+            color: #34495e;
+            font-size: 1.8em;
+            margin: 30px 0 15px 0;
+            padding: 10px 0;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        h3 {
+            color: #2c3e50;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+            padding-left: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        p {
+            margin-bottom: 16px;
+            text-align: justify;
+            font-size: 1.1em;
+            line-height: 1.7;
+            padding: 8px 0;
+        }
+
+        .content-block {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-block:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .definition {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+            font-style: italic;
+        }
+
+        .emphasis {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        .component-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .component-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #6f42c1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .topic-section {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+        }
+
+        .image-placeholder {
+            background: #e9ecef;
+            border: 2px dashed #6c757d;
+            border-radius: 10px;
+            padding: 40px 20px;
+            margin: 20px 0;
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .topology-image {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+            margin: 15px auto;
+            display: block;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        ul, ol {
+            margin: 10px 0 10px 30px;
+        }
+
+        ul li, ol li {
+            margin-bottom: 8px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        strong {
+            color: #2c3e50;
+        }
+
+        em {
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+            
+            h3 {
+                font-size: 1.2em;
+            }
+            
+            .component-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .topology-image {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Лекция: Компьютерные сети</h1>
+        <h2>Тема 5: Компоненты сети, топологии, адресация, сетевые модели</h2>
+
+        <div class="topic-section">
+            <h2>1. Компоненты компьютерной сети</h2>
+            
+            <div class="definition">
+                <p><strong>Компьютерная сеть</strong> — это система связи двух или более компьютеров или компьютерного оборудования.</p>
+            </div>
+
+            <h3>Основные компоненты сети:</h3>
+            <div class="component-list">
+                <div class="component-item">
+                    <strong>Конечные устройства (хосты)</strong>
+                    <p>Устройства, которые связывают конечного пользователя с сетью и передают или получают информацию.</p>
+                    <em>Примеры: компьютеры, принтеры, смартфоны, IoT-устройства.</em>
+                </div>
+                <div class="component-item">
+                    <strong>Промежуточные устройства</strong>
+                    <p>Служебные устройства, которые передают информацию по сети.</p>
+                    <em>Примеры: коммутаторы, маршрутизаторы, межсетевые экраны.</em>
+                </div>
+                <div class="component-item">
+                    <strong>Сетевая операционная система</strong>
+                    <p>ОС, которая предоставляет доступ к сетевым устройствам и управляет сетевыми ресурсами.</p>
+                    <em>Примеры: Windows Server, Linux, Cisco IOS.</em>
+                </div>
+                <div class="component-item">
+                    <strong>Передающие среды</strong>
+                    <p>Линии связи или пространство, в котором распространяются сигналы.</p>
+                    <em>Примеры: медные провода, оптоволокно, радиоволны.</em>
+                </div>
+            </div>
+
+            <div class="image-placeholder">
+               <img src="КС.png" alt="Полносвязная топология" class="topology-image">
+            </div>
+        </div>
+
+        <div class="topic-section">
+            <h2>2. Топологии компьютерных сетей</h2>
+            
+            <div class="definition">
+                <p><strong>Топология сети</strong> — это конфигурация сети, описывающая расположение и соединение сетевых устройств.</p>
+            </div>
+
+            <div class="content-block">
+                <h3>Полносвязная топология (Full-Mesh)</h3>
+                <p>Каждое устройство связано со всеми остальными. Обеспечивает высокую отказоустойчивость, но требует много ресурсов и сложна в расширении.</p>
+                <img src="a30b8be3-9e86-4891-af57-ba53038b71c2.png" alt="Полносвязная топология" class="topology-image">
+            </div>
+
+            <div class="content-block">
+                <h3>Неполносвязная топология (Partial-Mesh)</h3>
+                <p>Упрощённый вариант полносвязной топологии, где некоторые связи удалены. Используется для экономии ресурсов.</p>
+                <img src="19f29531-87c7-4945-88e2-066fd1b93104.png" alt="Неполносвязная топология" class="topology-image">
+            </div>
+
+            <div class="content-block">
+                <h3>Кольцевая топология (Ring)</h3>
+                <p>Устройства соединены в кольцо, данные передаются последовательно. При обрыве кабеля сеть становится неработоспособной.</p>
+                <img src="bc21d9e7-a235-4954-b6d8-33f3bda8d1ff.png" alt="Кольцевая топология" class="topology-image">
+            </div>
+
+            <div class="content-block">
+                <h3>Звездообразная топология (Star)</h3>
+                <p>Все устройства подключены к центральному узлу (коммутатору). Удобна для локальных сетей, но отказ центрального узла парализует всю сеть.</p>
+                <img src="bab9ceb0-e310-4140-b76c-f0184970eedf.png" alt="Звездообразная топология" class="topology-image">
+            </div>
+
+            <div class="content-block">
+                <h3>Топология "Общая шина" (Bus)</h3>
+                <p>Все устройства подключены к одному кабелю. Проста в установке, но крайне неустойчива к повреждениям.</p>
+                <img src="39b59fd1-630a-43f7-9d7e-ef74b159f04b.png" alt="Топология Общая шина" class="topology-image">
+            </div>
+
+
+        <div class="topic-section">
+            <h2>3. Адресация сетевых устройств</h2>
+            
+            <div class="definition">
+                <p><strong>Сетевой адрес</strong> — уникальный идентификатор устройства в сети, необходимый для доставки данных.</p>
+            </div>
+
+            <div class="content-block">
+                <h3>Требования к сетевым адресам:</h3>
+                <ul>
+                    <li>Уникальность</li>
+                    <li>Иерархичность</li>
+                    <li>Компактность и простота запоминания</li>
+                    <li>Удобство администрирования</li>
+                </ul>
+            </div>
+
+            <div class="content-block">
+                <h3>Типы сетевых адресов:</h3>
+                <ul>
+                    <li><strong>MAC-адрес (физический адрес)</strong> — уникальный идентификатор сетевого адаптера. Пример: 00-B3-CF-34-4E-11</li>
+                    <li><strong>IP-адрес (сетевой адрес)</strong> — числовой адрес устройства в глобальной сети. Пример: 195.210.208.123</li>
+                    <li><strong>Доменное имя (символьный адрес)</strong> — удобное для человека имя устройства. Пример: rasp.tpu.ru</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="topic-section">
+            <h2>4. Сетевые модели и протоколы</h2>
+            
+            <div class="definition">
+                <p><strong>Сетевая модель</strong> — иерархическая структура, разбивающая задачу передачи данных на уровни. Каждый уровень взаимодействует только с соседними.</p>
+            </div>
+
+            <h3>Модель OSI (7 уровней):</h3>
+            <div class="component-list">
+                <div class="component-item">
+                    <strong>1. Физический уровень</strong>
+                    <p>Передача битов по среде (кабели, радиоволны).</p>
+                </div>
+                <div class="component-item">
+                    <strong>2. Канальный уровень</strong>
+                    <p>Адресация в локальной сети, обнаружение ошибок (MAC-адреса, Ethernet).</p>
+                </div>
+                <div class="component-item">
+                    <strong>3. Сетевой уровень</strong>
+                    <p>Маршрутизация, IP-адресация (IPv4, IPv6).</p>
+                </div>
+                <div class="component-item">
+                    <strong>4. Транспортный уровень</strong>
+                    <p>Обеспечение надежной передачи данных (TCP, UDP, порты).</p>
+                </div>
+                <div class="component-item">
+                    <strong>5. Сеансовый уровень</strong>
+                    <p>Установление, управление и завершение сеансов связи.</p>
+                </div>
+                <div class="component-item">
+                    <strong>6. Уровень представления</strong>
+                    <p>Преобразование данных в понятный приложениям формат (шифрование, сжатие).</p>
+                </div>
+                <div class="component-item">
+                    <strong>7. Прикладной уровень</strong>
+                    <p>Интерфейс для сетевых приложений (HTTP, FTP, Email).</p>
+                </div>
+            </div>
+<div class="image-placeholder">
+               <img src="b23d81ae-f06d-4043-baed-436ee4411e0f.jpg" alt="Полносвязная топология" class="topology-image">
+            </div>
+        </div>
+            <div class="content-block">
+                <h3>Инкапсуляция и декапсуляция</h3>
+                <p>Процесс добавления заголовков каждого уровня к данным при передаче (инкапсуляция) и их извлечения при приеме (декапсуляция).</p>
+            </div>
+
+<div class="image-placeholder">
+               <img src="c369462b-dcfa-4272-928c-cde46c392b21.jpg" alt="Полносвязная топология" class="topology-image">
+            </div>
+        </div>
+
+        <div class="topic-section">
+            <h2>5. Клиент-серверная архитектура</h2>
+          <div class="image-placeholder">
+               <img src="1c73483d-1573-46d1-a164-039c8be9d746.png" alt="Полносвязная топология" class="topology-image">
+            </div>
+        </div>  
+            <div class="definition">
+                <p><strong>Клиент-серверная архитектура</strong> — сетевая архитектура, в которой задачи распределены между поставщиками услуг (серверы) и заказчиками (клиенты).</p>
+            </div>
+
+            <div class="content-block">
+                <h3>Основные принципы:</h3>
+                <ul>
+                    <li><strong>Сервер</strong> — программа или устройство, предоставляющее ресурсы или услуги.</li>
+                    <li><strong>Клиент</strong> — программа или устройство, запрашивающее услуги у сервера.</li>
+                    <li>Взаимодействие происходит через сетевые протоколы (HTTP, FTP, SMTP и др.).</li>
+                    <li>Серверы обычно размещаются на высокопроизводительных машинах.</li>
+                </ul>
+            </div>
+
+            <div class="emphasis">
+                <p>Большинство современных сетевых сервисов (веб-сайты, почта, облачные хранилища) построены по клиент-серверной модели, что обеспечивает централизованное управление ресурсами и безопасность.</p>
+            </div>
+
+
+
+        <div class="emphasis">
+            <p>Компьютерные сети представляют собой сложные системы, состоящие из аппаратных и программных компонентов, соединённых по определённым топологиям. Понимание принципов адресации, сетевых моделей и архитектур позволяет эффективно проектировать, настраивать и администрировать современные сети.</p>
+        </div>
+    </div>
+</body>
+</html>
