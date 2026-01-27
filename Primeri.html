@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Примеры сравнительного анализа программных продуктов. Механизмы и контроль внесения изменений в код</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h2 {
+            color: #34495e;
+            font-size: 1.8em;
+            margin: 30px 0 15px 0;
+            padding: 10px 0;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        h3 {
+            color: #2c3e50;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+            padding-left: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        p {
+            margin-bottom: 16px;
+            text-align: justify;
+            font-size: 1.1em;
+            line-height: 1.7;
+            padding: 8px 0;
+        }
+
+        .content-block {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-block:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .topic-section {
+            margin: 25px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+        }
+
+        .sub-topic {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #28a745;
+        }
+
+ 
+        .feature-list p {
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .feature-list p:before {
+            content: "•";
+            color: #a466ea;
+            font-weight: bold;
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+            
+            h3 {
+                font-size: 1.2em;
+            }
+        }
+
+        .emphasis {
+             background: #fbe8fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #e83e8c;
+        }
+
+        .definition {
+            background: #fbe8fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #db34d3;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Лекция № 3 </h1>
+        <h2>Примеры сравнительного анализа программных продуктов. Механизмы и контроль внесения изменений в код</h2>
+        
+        <div class="content-block">
+            <p><b>Цель урока: </b> Понять как происходит управление изменениями в разработке ПО: от кода до релиза.</p>
+        </div>
+
+        <div class="topic-section">
+            <h2>Почему небходим релиз?</h2>
+            
+            <div class="definition">
+                <p><b>Релиз программного обеспечения </b>— это официально выпущенная версия программного продукта, предназначенная для распространения и использования.  </p>
+            </div>
+
+            <h3>Цель релиза — доставить ценность конечному пользователю: </h3>
+            <div class="feature-list">
+                <p>новую функцию</p>
+                <p>исправление проблем</p>
+                <p>повышение производительности и т. д.</p>
+            </div>
+
+            <h3>Некоторые этапы подготовки релиза:</h3>
+            <div class="sub-topic">
+                <p><strong>Планирование </strong> — определение состава релиза, сроков, ответственных. </p>
+            </div>
+            <div class="sub-topic">
+                <p><strong>Разработка</strong> — реализация функций, исправлений и обновлений.</p>            
+            </div>
+            <div class="sub-topic">
+                <p><strong>Тестирование</strong> — всесторонняя проверка качества продукта.</p>            
+            </div>
+            <div class="sub-topic">
+                <p><strong>Подготовка инфраструктуры</strong> — настройка серверов, баз данных, систем доставки.</p>            
+            </div>
+
+            <div class="sub-topic">
+                <p><strong>Релиз (деплой) </strong> — фактический выпуск продукта пользователям.</p>            
+            </div>
+
+            <div class="sub-topic">
+                <p><strong>Мониторинг и поддержка</strong> — отслеживание производительности, отзывов и ошибок.</p>            
+            </div>
+
+            <div class="sub-topic">
+                <p><strong>Документация и анонс</strong> — публикация релиз-нотов, обучение пользователей, продвижение.</p>            
+            </div>
+
+            <h3>Контроль</h3>
+            <div class="feature-list">
+                <p>После выпуска релиза его работоспособность мониторится, и в случае обнаружения проблем проводится анализ и корректировка. Также релизная команда подводит итоги, анализирует выполненные изменения и полученную обратную связь. Если возникает потребность в дополнительных доработках, специалисты фиксируют их и планируют дальнейшее развитие продукта в рамках нового релиза. </p>
+            </div>
+        </div>
+
+        <div class="topic-section">
+            <h2>В чем разница между сборкой и релизом?</h2>
+            
+            <div class="definition">
+                <p>В контексте разработки программного обеспечения <b>сборка (build)</b> - это скомпилированная версия программы, готовая к тестированию или развертыванию.</p>
+                <p>А <b>релиз </b> — это окончательная версия ПО, предназначенная для пользователей. 
+Оба эти понятия относятся к процессу непрерывной интеграции и развертывания.</p>
+            </div>
+
+            <h3>Системы контроля версий.</h3>
+            <div class="sub-topic">
+                <p><strong>Система управления (контроля) версиями (Version Control System)</strong> — программное обеспечение для облегчения работы с изменяющейся информацией. </p>
+            </div>
+            <div class="sub-topic">
+                <p>Система управления версиями позволяет хранить несколько версий одного и того же документа, при необходимости возвращаться к более ранним версиям, определять, кто и когда сделал то или иное изменение, и многое другое. </p>
+            <p>Пример системы контроля версий: git. Сайт github.</p>
+            </div>
+
+
+        <div class="topic-section">
+            <h2>Современные системы контроля версий</h2>
+            
+            <div class="definition">
+                <p>Существует много систем контроля версий (Git, Darcs, Mercurial, Bazaar, Monotone и т.д), сходных по принципу работы и конечным задачам.</p>
+                <p>Самая популярная на сегодняшний день система контроля версий – Git</p>
+            </div>
+
+
+            <h3>Системы контроля версий решают следующие проблемы:</h3>
+            <div class="feature-list">
+                <p>- хранение версий файлов;</p>
+                <p>- возможность получить любые предыдущие версии хранимых файлов;</p>
+                <p>- просмотр изменений внесенных между заданными в запросе версиями;</p>
+                <p>- сохранение и просмотр комментариев и авторов к внесенным изменениям.</p>
+            </div>
+
+            <h3>Что вы узнали на уроке?</h3>
+            <div class="feature-list">
+                <p>Поняла как происходит управление изменениями в разработке ПО: от кода до релиза.</p>
+                <p>Что такое релиз и зачем он нужен</p>
+                <p>Что такое Контроль</p>
+                <p>Этапы подготовки релиза</p>
+            </div>
+</body>
+</html>
